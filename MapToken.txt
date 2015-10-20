@@ -1,0 +1,9 @@
+
+Map service ApplicationID
+
+c65094e7-897d-4de5-ac65-e14f05ab90f7
+
+
+Map service AuthenticationToken
+
+t8Ko1RpGcknITinQoF1IdA

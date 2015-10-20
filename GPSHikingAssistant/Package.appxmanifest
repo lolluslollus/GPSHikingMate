@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest" xmlns:m3="http://schemas.microsoft.com/appx/2014/manifest" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest">
+  <Identity Name="35701Lollus.2332535360DC1" Publisher="CN=9B2F7926-7E04-4BF6-BDB8-A8FD12FC5378" Version="2015.1019.2123.1" />
+  <mp:PhoneIdentity PhoneProductId="3b93a29f-4922-46fb-a673-8cfb376081f4" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <Properties>
+    <DisplayName>GPS Hiking Mate</DisplayName>
+    <PublisherDisplayName>Lollus</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+  <Prerequisites>
+    <OSMinVersion>6.3.1</OSMinVersion>
+    <OSMaxVersionTested>6.3.1</OSMaxVersionTested>
+  </Prerequisites>
+  <Resources>
+    <Resource Language="x-generate" />
+  </Resources>
+  <Applications>
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="LolloGPS.Core.App">
+      <m3:VisualElements DisplayName="GPS Hiking Mate" Square150x150Logo="Assets\Logo.png" Square44x44Logo="Assets\SmallLogo.png" Description="GPSHikingMate" ForegroundText="light" BackgroundColor="transparent" ToastCapable="false">
+        <m3:DefaultTile Wide310x150Logo="Assets\WideLogo.png" Square71x71Logo="Assets\SquareLogo-170.png">
+        </m3:DefaultTile>
+        <m3:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="mediumBlue" />
+      </m3:VisualElements>
+      <Extensions>
+        <Extension Category="windows.backgroundTasks" EntryPoint="BackgroundTasks.GetLocationBackgroundTask">
+          <BackgroundTasks>
+            <Task Type="timer" />
+            <m2:Task Type="location" />
+          </BackgroundTasks>
+        </Extension>
+        <Extension Category="windows.fileOpenPicker">
+          <FileOpenPicker>
+            <SupportedFileTypes>
+              <FileType>.gpx</FileType>
+              <FileType>.xml</FileType>
+            </SupportedFileTypes>
+          </FileOpenPicker>
+        </Extension>
+        <Extension Category="windows.fileTypeAssociation">
+          <FileTypeAssociation Name="gpx">
+            <DisplayName>GPX</DisplayName>
+            <Logo>Assets\Icon.png</Logo>
+            <SupportedFileTypes>
+              <FileType>.gpx</FileType>
+            </SupportedFileTypes>
+          </FileTypeAssociation>
+        </Extension>
+        <Extension Category="windows.fileSavePicker">
+          <FileSavePicker>
+            <SupportedFileTypes>
+              <FileType>.gpx</FileType>
+            </SupportedFileTypes>
+          </FileSavePicker>
+        </Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+  <Capabilities>
+    <Capability Name="removableStorage" />
+    <Capability Name="internetClientServer" />
+    <DeviceCapability Name="location" />
+  </Capabilities>
+</Package>
