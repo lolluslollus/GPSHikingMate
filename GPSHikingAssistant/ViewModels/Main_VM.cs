@@ -213,17 +213,6 @@ namespace LolloGPS.Core
 		public void SetLastMessage_UI(string message)
 		{
 			MyPersistentData.LastMessage = message;
-   //         if (CoreApplication.MainView.CoreWindow.Dispatcher.HasThreadAccess)
-			//{
-			//	MyPersistentData.LastMessage = message;
-			//}
-			//else
-			//{
-			//	IAsyncAction msg = CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Low, delegate
-			//	{
-			//		MyPersistentData.LastMessage = message;
-			//	});
-			//}
 		}
 		public async void GetAFix()
 		{
@@ -388,7 +377,7 @@ namespace LolloGPS.Core
 				Logger.Add_TPL(ex.ToString(), Logger.ForegroundLogFilename);
 			}
 		}
-		
+
 		internal void PickLoadSeries(PersistentData.Tables whichSeries)
 		{
 			FileOpenPicker openPicker = new FileOpenPicker();
@@ -421,7 +410,7 @@ namespace LolloGPS.Core
 				var whichSeries = PersistentData.Tables.nil;
 				try
 				{
-					await Task.Run(async () =>
+					await Task.Run(async delegate
 					{
 						var file_mt = args.Files[0] as StorageFile;
 
@@ -440,19 +429,20 @@ namespace LolloGPS.Core
 							// update the UI with the file data
 							if (result.Item1)
 							{
-								await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+								Task task1 = null;
+								await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, delegate
 								{
 									switch (whichSeries)
 									{
 										case PersistentData.Tables.History:
 											break;
 										case PersistentData.Tables.Route0:
-											await MyPersistentData.LoadRoute0FromDbAsync(false); //.ConfigureAwait(false);
-											await CentreOnRoute0Async().ConfigureAwait(false);
+											task1 = MyPersistentData.LoadRoute0FromDbAsync(false)
+												.ContinueWith(delegate { return CentreOnRoute0Async(); });
 											break;
 										case PersistentData.Tables.Landmarks:
-											await MyPersistentData.LoadLandmarksFromDbAsync(false); //.ConfigureAwait(false);
-											await CentreOnLandmarksAsync().ConfigureAwait(false);
+											task1 = MyPersistentData.LoadLandmarksFromDbAsync(false)
+												.ContinueWith(delegate { return CentreOnLandmarksAsync(); });
 											break;
 										case PersistentData.Tables.nil:
 											break;
@@ -460,6 +450,7 @@ namespace LolloGPS.Core
 											break;
 									}
 								}).AsTask().ConfigureAwait(false);
+								if (task1 != null) await task1.ConfigureAwait(false);
 							}
 						}
 					}).ConfigureAwait(false);
@@ -492,7 +483,7 @@ namespace LolloGPS.Core
 				{
 					if (args.ContinuationData[WHICH_TABLE].ToString().Equals(PersistentData.Tables.History.ToString()))
 					{
-						await Task.Run(async () =>
+						await Task.Run(async delegate
 						{
 							// initialise cancellation token
 							_fileSavePickerCts = new CancellationTokenSource();
@@ -506,7 +497,7 @@ namespace LolloGPS.Core
 					}
 					else if (args.ContinuationData[WHICH_TABLE].ToString().Equals(PersistentData.Tables.Route0.ToString()))
 					{
-						await Task.Run(async () =>
+						await Task.Run(async delegate
 						{
 							// initialise cancellation token
 							_fileSavePickerCts = new CancellationTokenSource();
@@ -520,7 +511,7 @@ namespace LolloGPS.Core
 					}
 					else if (args.ContinuationData[WHICH_TABLE].ToString().Equals(PersistentData.Tables.Landmarks.ToString()))
 					{
-						await Task.Run(async () =>
+						await Task.Run(async delegate
 						{
 							// initialise cancellation token
 							_fileSavePickerCts = new CancellationTokenSource();

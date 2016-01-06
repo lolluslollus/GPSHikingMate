@@ -320,6 +320,10 @@ namespace LolloGPS.Core
 		{
 			MyVM.IsLastMessageVisible = false;
 		}
+		private void OnMapStyleButton_Click(object sender, RoutedEventArgs e)
+		{
+			MyPersistentData.CycleMapStyle();
+		}
 		private void OnLastMessage_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
 		{
 			if (!MyVM.IsLastMessageVisible && !string.IsNullOrWhiteSpace(MyVM.MyPersistentData.LastMessage))

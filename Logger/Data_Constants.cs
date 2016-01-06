@@ -9,7 +9,7 @@ namespace LolloGPS.Data.Constants
 {
     public static class ConstantData
     {
-        public const String DATE_TIME_FORMAT = "yyyy-MM-ddTHH:mm:ssZ";
+        public const string DATE_TIME_FORMAT = "yyyy-MM-ddTHH:mm:ssZ";
         public const string MYMAIL = "lollus@hotmail.co.uk";
         public const string APPNAME = "GPS Hiking Mate for Windows Phone 8.1";
         public const string APPNAME_ALL_IN_ONE = "GPSHikingMate";
@@ -18,8 +18,9 @@ namespace LolloGPS.Data.Constants
         public const string GPX_EXTENSION = ".gpx";
         public const string GET_LOCATION_BACKGROUND_TASK_NAME = "GetLocationBackgroundTask";
         public const string GET_LOCATION_BACKGROUND_TASK_ENTRY_POINT = "BackgroundTasks.GetLocationBackgroundTask";
+		public const int TRIAL_LENGTH_DAYS = 9999;
 
-        public static string AppName { get { return ConstantData.APPNAME; } }
+		public static string AppName { get { return ConstantData.APPNAME; } }
         private static string _version = Package.Current.Id.Version.Major.ToString()
             + "."
             + Package.Current.Id.Version.Minor.ToString()

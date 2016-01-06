@@ -56,33 +56,37 @@
 				IsDoubleTapEnabled="False" IsHitTestVisible="False" IsHoldingEnabled="False" IsRightTapEnabled="False"
 				VerticalAlignment="Bottom">
 			<!-- left distance -->
+			<!--Canvas.Top="-74"-->
 			<TextBlock Text="0" 
-				   Canvas.Left="18" Canvas.Top="-74"
+				   Canvas.Left="18" Canvas.Top="-72"
 				   HorizontalAlignment="Center" 
 				   FontWeight="Bold" 
 				   Style="{StaticResource BaseMessageStyle}" 
 				   IsDoubleTapEnabled="False" IsHitTestVisible="False" IsHoldingEnabled="False" IsRightTapEnabled="False" 
 				   Foreground="{StaticResource ObjectInOverlayForegroundBrush}" ScrollViewer.VerticalScrollBarVisibility="Disabled"/>
 			<!-- right distance -->
+			<!--Canvas.Top="-74"-->
 			<TextBlock Text="{Binding ElementName=MyMap, Path=ZoomLevel, Converter={StaticResource ScaleSizeConverter}, ConverterParameter=distRounded}"
 				   Canvas.Left="{Binding ElementName=MyMap, Path=ZoomLevel, Converter={StaticResource ScaleSizeConverter}, ConverterParameter=rightLabelX}"
-				   Canvas.Top="-74" 
+				   Canvas.Top="-72" 
 				   HorizontalAlignment="Center" 
 				   FontWeight="Bold" 
 				   Style="{StaticResource BaseMessageStyle}" 
 				   IsDoubleTapEnabled="False" IsHitTestVisible="False" IsHoldingEnabled="False" IsRightTapEnabled="False" 
 				   Foreground="{StaticResource ObjectInOverlayForegroundBrush}" ScrollViewer.VerticalScrollBarVisibility="Disabled" />
 			<!-- internal zoom level -->
+			<!--Canvas.Top="-94"-->
 			<TextBlock Text="{Binding ElementName=MyMap, Path=ZoomLevel, Converter={StaticResource ScaleSizeConverter}, ConverterParameter=techZoom}"
-				   Canvas.Left="18" Canvas.Top="-94"
+				   Canvas.Left="18" Canvas.Top="-95"
 				   HorizontalAlignment="Center" 
 				   FontWeight="Bold" 
 				   Style="{StaticResource BaseMessageStyle}" 
 				   IsDoubleTapEnabled="False" IsHitTestVisible="False" IsHoldingEnabled="False" IsRightTapEnabled="False" 
 				   Foreground="{StaticResource ObjectInOverlayForegroundBrush}" ScrollViewer.VerticalScrollBarVisibility="Disabled" />
 			<!-- scale bar -->
+			<!--Canvas.Top="-60"-->
 			<Image x:Name="ScaleImage"
-				   Canvas.Top="-60" Canvas.Left="20" 
+				   Canvas.Top="-50" Canvas.Left="20" 
 				   Source="ms-appx:///Assets/scale-300.png" 
 				   ScrollViewer.VerticalScrollBarVisibility="Disabled" 
 				   Stretch="None" 

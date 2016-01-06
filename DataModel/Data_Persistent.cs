@@ -221,7 +221,7 @@ namespace LolloGPS.Data
 		public static Task<bool> RunDbOpInOtherTaskAsync(Func<bool> action)
 		{
 			return LolloSQLiteConnectionPoolMT.RunInOtherTaskAsync(action);
-		}		
+		}
 		/// <summary>
 		/// Waits for current DB operations to terminate and then locks the DB.
 		/// </summary>
@@ -612,31 +612,31 @@ namespace LolloGPS.Data
 			try
 			{
 				await _historySemaphore.WaitAsync().ConfigureAwait(false);
-				
+
 				await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, delegate
 				{
-				_history.Clear();
+					_history.Clear();
 
-				if (dataRecords != null)
-				{
-					try
+					if (dataRecords != null)
 					{
-						if (isShowMessageEvenIfSuccess) LastMessage = "History updated";
-						_history.AddRange(dataRecords.Where(a => !a.IsEmpty()));
+						try
+						{
+							if (isShowMessageEvenIfSuccess) LastMessage = "History updated";
+							_history.AddRange(dataRecords.Where(a => !a.IsEmpty()));
+						}
+						catch (IndexOutOfRangeException)
+						{
+							LastMessage = "Only part of the history is drawn";
+						}
+						catch (OutOfMemoryException) // TODO this should never happen. If it does, lower MaxRecordsInHistory
+						{
+							var howMuchMemoryLeft = GC.GetTotalMemory(true);
+							LastMessage = "Only part of the history is drawn";
+							Logger.Add_TPL("OutOfMemoryException in PersistentData.SetHistory()", Logger.PersistentDataLogFilename);
+						}
 					}
-					catch (IndexOutOfRangeException)
-					{
-						LastMessage = "Only part of the history is drawn";
-					}
-					catch (OutOfMemoryException) // TODO this should never happen. If it does, lower MaxRecordsInHistory
-					{
-						var howMuchMemoryLeft = GC.GetTotalMemory(true);
-						LastMessage = "Only part of the history is drawn";
-						Logger.Add_TPL("OutOfMemoryException in PersistentData.SetHistory()", Logger.PersistentDataLogFilename);
-					}
-				}
 
-				SetCurrentToLast();
+					SetCurrentToLast();
 				}).AsTask().ConfigureAwait(false);
 			}
 			catch (Exception exc0)
@@ -1111,28 +1111,28 @@ namespace LolloGPS.Data
 				await _tileSourcezSemaphore.WaitAsync().ConfigureAwait(false);
 				await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, delegate
 				{
-				if (tileSource.IsAll)
-				{
-					Collection<TileSourceRecord> tsTBDeleted = new Collection<TileSourceRecord>();
-					foreach (var item in TileSourcez.Where(a => a.IsDeletable))
+					if (tileSource.IsAll)
+					{
+						Collection<TileSourceRecord> tsTBDeleted = new Collection<TileSourceRecord>();
+						foreach (var item in TileSourcez.Where(a => a.IsDeletable))
+						{
+							// restore default if removing current tile source
+							if (CurrentTileSource.TechName == item.TechName) CurrentTileSource = TileSourceRecord.GetDefaultTileSource();
+							tsTBDeleted.Add(item);
+							// TileSourcez.Remove(item); // nope, it dumps if you modify a collection while looping over it
+						}
+						foreach (var item in tsTBDeleted)
+						{
+							TileSourcez.Remove(item);
+						}
+					}
+					else if (tileSource.IsDeletable)
 					{
 						// restore default if removing current tile source
-						if (CurrentTileSource.TechName == item.TechName) CurrentTileSource = TileSourceRecord.GetDefaultTileSource();
-						tsTBDeleted.Add(item);
-						// TileSourcez.Remove(item); // nope, it dumps if you modify a collection while looping over it
+						if (CurrentTileSource.TechName == tileSource.TechName) CurrentTileSource = TileSourceRecord.GetDefaultTileSource();
+						TileSourcez.Remove(tileSource);
 					}
-					foreach (var item in tsTBDeleted)
-					{
-						TileSourcez.Remove(item);
-					}
-				}
-				else if (tileSource.IsDeletable)
-				{
-					// restore default if removing current tile source
-					if (CurrentTileSource.TechName == tileSource.TechName) CurrentTileSource = TileSourceRecord.GetDefaultTileSource();
-					TileSourcez.Remove(tileSource);
-				}
-				RaisePropertyChanged(nameof(TileSourcez));
+					RaisePropertyChanged(nameof(TileSourcez));
 				}).AsTask().ConfigureAwait(false);
 			}
 			finally

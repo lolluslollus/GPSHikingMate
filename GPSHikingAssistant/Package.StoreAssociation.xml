@@ -365,22 +365,23 @@
   </ProductReservedInfo>
   <AccountPackageIdentityNames>
     <MainPackageIdentityName>35701Lollus.GPSHikingMate10</MainPackageIdentityName>
+    <MainPackageIdentityName>35701Lollus.PaperMate</MainPackageIdentityName>
   </AccountPackageIdentityNames>
   <PackageInfoList LandingUrl="https://dev.windows.com/dashboard/Application?appId=9NBLGGH31F8P">
     <PackageInfo>
       <OsMinVersion>6.3.1.0</OsMinVersion>
       <PackageArchitecture>Arm</PackageArchitecture>
-      <PackageMaxArchitectureVersion>2015.915.2123.1</PackageMaxArchitectureVersion>
+      <PackageMaxArchitectureVersion>2015.1019.2123.1</PackageMaxArchitectureVersion>
     </PackageInfo>
     <PackageInfo>
       <OsMinVersion>6.3.1.0</OsMinVersion>
       <PackageArchitecture>Neutral</PackageArchitecture>
-      <PackageMaxArchitectureVersion>2015.915.2123.1</PackageMaxArchitectureVersion>
+      <PackageMaxArchitectureVersion>2015.1019.2123.1</PackageMaxArchitectureVersion>
     </PackageInfo>
     <PackageInfo>
       <OsMinVersion>6.3.1.0</OsMinVersion>
       <PackageArchitecture>Neutral</PackageArchitecture>
-      <PackageMaxArchitectureVersion>2015.915.2123.1</PackageMaxArchitectureVersion>
+      <PackageMaxArchitectureVersion>2015.1019.2123.1</PackageMaxArchitectureVersion>
     </PackageInfo>
   </PackageInfoList>
 </StoreAssociation>

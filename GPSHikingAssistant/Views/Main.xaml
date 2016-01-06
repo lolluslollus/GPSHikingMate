@@ -12,17 +12,8 @@
 	DataContext="{Binding MyPersistentData, RelativeSource={RelativeSource Self}}"
 	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	Loaded="OnLoaded"
-	UseLayoutRounding="True"
-	>
-	<Page.Transitions>
-		<TransitionCollection>
-			<!--<NavigationThemeTransition>
-				<NavigationThemeTransition.DefaultNavigationTransitionInfo>
-					<CommonNavigationTransitionInfo IsStaggeringEnabled="False"/>
-				</NavigationThemeTransition.DefaultNavigationTransitionInfo>
-			</NavigationThemeTransition>-->
-		</TransitionCollection>
-	</Page.Transitions>
+	UseLayoutRounding="True">
+
 	<!--<Page.Resources>
 		-->
 	<!-- Animates the message area -->
@@ -91,13 +82,14 @@
 		</Grid>
 		<!-- Map, altitude and their overlays -->
 		<Grid Grid.Row="0" Grid.Column="1">
+			<!--Height="{StaticResource TextControlThemeMinHeight}"-->
 			<Grid.RowDefinitions>
 				<RowDefinition Height="*" />
-				<RowDefinition Height="25" />
+				<RowDefinition Height="Auto" />
 			</Grid.RowDefinitions>
 
 			<!-- download bar and icons for battery consuming features -->
-			<StackPanel Grid.Row="0" Orientation="Vertical" Canvas.ZIndex="100" >
+			<StackPanel Grid.Row="0" Orientation="Vertical" Canvas.ZIndex="100">
 				<!-- download progress bar -->
 				<Grid Background="{ThemeResource PhoneBackgroundBrush}"
 					Opacity=".75"
@@ -200,7 +192,7 @@
 			<!-- Must never set visibility = Collapsed, even in code: use height = 0 instead, to avoid stupid catastrophic failure -->
 			<!--Background="MediumBlue"-->
 			<local:LolloMap Grid.Row="0" Canvas.ZIndex="0"
-						x:Name="MyLolloMap"/>
+				x:Name="MyLolloMap"/>
 			<!-- Altitude profiles -->
 			<local:AltitudeProfiles Grid.Row="0" Canvas.ZIndex="200"
 				x:Name="MyAltitudeProfiles"            
@@ -431,7 +423,8 @@
 
 							<TextBlock Grid.Row="0" Grid.Column="0" 
 								Text="Foreground trk period (sec): " 
-								TextWrapping="Wrap" Style="{StaticResource BaseMessageStyle}"
+								TextWrapping="Wrap" 
+								Style="{StaticResource BaseMessageStyle}"
 								Margin="{StaticResource PanelMargin2}"
 								VerticalAlignment="Center"/>
 							<Slider Grid.Row="0" Grid.Column="1" Margin="{StaticResource BaseMessageStyleMargin}" 
@@ -633,12 +626,21 @@
 				</PivotItem>				
 			</Pivot>
 			<!-- user info -->
-			<StackPanel Grid.Row="1" Orientation="Horizontal"
-						Background="{ThemeResource FlyoutBackgroundThemeBrush}"
-					ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"
-					Visibility="{Binding History.Count, Converter={StaticResource SeriesIsEmptyToCollapsedConverter}, UpdateSourceTrigger=PropertyChanged}"
-					Tapped="OnLastMessage_Tapped">
-				<TextBlock TextWrapping="Wrap" Margin="{StaticResource TightMargin}" Style="{StaticResource BaseTightMessageStyle}" HorizontalAlignment="Left"
+			<Border Grid.Row="1"
+				Background="{ThemeResource FlyoutBackgroundThemeBrush}"				
+				Visibility="{Binding History.Count, Converter={StaticResource SeriesIsEmptyToCollapsedConverter}, UpdateSourceTrigger=PropertyChanged}"
+				Tapped="OnLastMessage_Tapped">
+				<TextBlock TextWrapping="Wrap" Margin="{StaticResource TightMargin}" Style="{StaticResource BaseTightMessageStyle}" HorizontalAlignment="Left">
+					<Run Text="Last:"/>
+					<Run Text="Lat"/>
+					<Run Text="{Binding Current.Latitude, Converter={StaticResource AngleConverter}, ConverterParameter=0, UpdateSourceTrigger=Default}"/>
+					<Run Text="Lon"/>
+					<Run Text="{Binding Current.Longitude, Converter={StaticResource AngleConverter}, ConverterParameter=0, UpdateSourceTrigger=Default}"/>
+					<Run Text="{Binding Current.Altitude, Converter={StaticResource StringFormatterConverter}, ConverterParameter='Alt {0} m'}"/>
+					<Run Text="@"/>
+					<Run Text="{Binding Current.TimePoint}"/>
+				</TextBlock>
+				<!--<TextBlock TextWrapping="Wrap" Margin="{StaticResource TightMargin}" Style="{StaticResource BaseTightMessageStyle}" HorizontalAlignment="Left"
 					   Text="Last:"/>
 				<TextBlock TextWrapping="Wrap" Margin="{StaticResource TightMargin}" Style="{StaticResource BaseTightMessageStyle}" HorizontalAlignment="Left"
 					   Text="Lat"/>
@@ -653,9 +655,13 @@
 				<TextBlock TextWrapping="Wrap" Margin="{StaticResource TightMargin}" Style="{StaticResource BaseTightMessageStyle}" HorizontalAlignment="Left"
 					   Text="@"/>
 				<TextBlock TextWrapping="Wrap" Margin="{StaticResource TightMargin}" Style="{StaticResource BaseTightMessageStyle}" HorizontalAlignment="Left"
-					   Text="{Binding Current.TimePoint}"/>
-			</StackPanel>
-			<Border Grid.Row="1" BorderThickness="0" Background="{ThemeResource FlyoutBackgroundThemeBrush}"
+					   Text="{Binding Current.TimePoint}"/>-->
+			</Border>
+			
+			<Border Grid.Row="0" Grid.RowSpan="2"
+				VerticalAlignment="Bottom"
+				BorderThickness="0"
+				Background="{ThemeResource FlyoutBackgroundThemeBrush}"
 				Visibility="{Binding History.Count, Converter={StaticResource SeriesIsEmptyToVisibleConverter}, UpdateSourceTrigger=PropertyChanged}"
 				Tapped="OnLastMessage_Tapped">
 				<TextBlock
@@ -665,17 +671,19 @@
 					HorizontalAlignment="Left"
 					Text="Get a fix or start tracking to retrieve your location"/>
 			</Border>
-			<Border Grid.Row="1" BorderThickness="0" Canvas.ZIndex="999"
+			<Border Grid.Row="0" Grid.RowSpan="2"
+				VerticalAlignment="Bottom"
+				BorderThickness="0" Canvas.ZIndex="999"
 				Background="{ThemeResource FlyoutBackgroundThemeBrush}"
 				Visibility="{Binding ElementName=me, Path=MyVM.IsLastMessageVisible, Converter={StaticResource BooleanToVisibleConverter}}"
 				Tapped="OnLastMessage_Tapped">
 				<TextBlock
-				   TextWrapping="Wrap"
-				   Margin="{StaticResource TightMargin}"
-				   Style="{StaticResource BaseTightMessageStyle}" 
-				   HorizontalAlignment="Left"
-				   Foreground="{StaticResource FlashyForeground}"
-				   Text="{Binding LastMessage}">
+					TextWrapping="Wrap"
+					Margin="{StaticResource TightMargin}"
+					Style="{StaticResource BaseTightMessageStyle}" 
+					HorizontalAlignment="Left"
+					Foreground="{StaticResource FlashyForeground}"
+					Text="{Binding LastMessage}">
 				</TextBlock>
 			</Border>
 		</Grid>
@@ -695,6 +703,7 @@
 				<RowDefinition/>
 			</Grid.RowDefinitions>-->
 			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="1*"/>
 				<ColumnDefinition Width="1*"/>
 				<ColumnDefinition Width="1*"/>
 				<ColumnDefinition Width="1*"/>
@@ -720,6 +729,18 @@
 						  Label="Menu" Icon="Setting"
 						  Click="OnOpenPivot_Click"
 						  Style="{StaticResource AppBarButtonRecoloured}"/>
+			<!-- map style -->
+			<AppBarButton Grid.Column="3"
+                HorizontalAlignment="Center"
+				Label="Map style"
+				Click="OnMapStyleButton_Click"
+                Style="{StaticResource AppBarButtonRecoloured}"
+				IsEnabled="{Binding ElementName=me, Path=MyVM.MyPersistentData.IsShowingAltitudeProfiles, Converter={StaticResource TrueToFalseConverter}}">
+				<AppBarButton.Icon>
+					<FontIcon FontFamily="{StaticResource DefaultFontFamily}" 
+                        Glyph="{Binding MapStyle, Converter={StaticResource MapStyleToGlyphConverter}}"/>
+				</AppBarButton.Icon>
+			</AppBarButton>
 		</Grid>
 		<!-- left button bar -->
 		<Grid Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" 
@@ -733,6 +754,7 @@
 			</Grid.Background>-->
 
 			<Grid.RowDefinitions>
+				<RowDefinition Height="1*"/>
 				<RowDefinition Height="1*"/>
 				<RowDefinition Height="1*"/>
 				<RowDefinition Height="1*"/>
@@ -758,6 +780,18 @@
 						  Label="Menu" Icon="Setting"
 						  Click="OnOpenPivot_Click"
 						  Style="{StaticResource AppBarButtonRecoloured}"/>
+			<!-- map style -->
+			<AppBarButton Grid.Row="3"
+                HorizontalAlignment="Center"
+				Label="Map style"
+				Click="OnMapStyleButton_Click"
+                Style="{StaticResource AppBarButtonRecoloured}"
+				IsEnabled="{Binding ElementName=me, Path=MyVM.MyPersistentData.IsShowingAltitudeProfiles, Converter={StaticResource TrueToFalseConverter}}">
+				<AppBarButton.Icon>
+					<FontIcon FontFamily="{StaticResource DefaultFontFamily}" 
+                        Glyph="{Binding MapStyle, Converter={StaticResource MapStyleToGlyphConverter}}"/>
+				</AppBarButton.Icon>
+			</AppBarButton>
 		</Grid>
 	</Grid>
 </Page>

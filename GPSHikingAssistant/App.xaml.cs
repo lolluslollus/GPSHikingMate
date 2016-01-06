@@ -177,10 +177,7 @@ namespace LolloGPS.Core
 				RuntimeData.SetIsDBDataRead_UI(true);
 				Logger.Add_TPL("OnResuming() called RuntimeData.SetIsDBDataRead_UI(true)", Logger.ForegroundLogFilename, Logger.Severity.Info);
 				// reregister events
-				//await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, delegate
-				//{
 				main.OnResuming();
-				//}).AsTask().ConfigureAwait(false);
 				// In simple cases, I don't need to deregister events when suspending and reregister them when resuming, 
 				// but I deregister them when suspending to make sure long running tasks are really stopped.
 				// This also includes the background task state check.
@@ -231,8 +228,7 @@ namespace LolloGPS.Core
 							{
 								Logger.Add_TPL("OnFileActivated() is about to open a file, app already running", Logger.ForegroundLogFilename, Logger.Severity.Info);
 
-								whichTables = await Task.Run(async () => await fileOpenPage.LoadFileIntoDbAsync(e as FileActivatedEventArgs));
-								//whichTables = await fileOpenPage.FileOpenAsync(e as FileActivatedEventArgs);
+								whichTables = await Task.Run(delegate { return fileOpenPage.LoadFileIntoDbAsync(e as FileActivatedEventArgs); });
 								if (whichTables != null)
 								{
 									// get file data from DB into UI
@@ -259,8 +255,7 @@ namespace LolloGPS.Core
 							{
 								Logger.Add_TPL("OnFileActivated() is about to open a file, app not running", Logger.ForegroundLogFilename, Logger.Severity.Info);
 
-								whichTables = await Task.Run(async () => await fileOpenPage.LoadFileIntoDbAsync(e as FileActivatedEventArgs)).ConfigureAwait(false);
-								// whichTables = await fileOpenPage.FileOpenAsync(e as FileActivatedEventArgs).ConfigureAwait(false);
+								whichTables = await Task.Run(delegate { return fileOpenPage.LoadFileIntoDbAsync(e as FileActivatedEventArgs); }).ConfigureAwait(false);
 								// get all data from DB into UI
 								await SuspensionManager.LoadSettingsAndDbDataAsync().ConfigureAwait(false);
 
