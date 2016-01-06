@@ -11,7 +11,6 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
 namespace LolloGPS.Core
@@ -27,16 +26,6 @@ namespace LolloGPS.Core
                 listener(this, EventArgs.Empty);
             }
         }
-
-
-
-
-
-
-
-
-
-
 
         private bool _isGotoPreviousEnabled = false;
         public bool IsGotoPreviousEnabled { get { return _isGotoPreviousEnabled; } private set { _isGotoPreviousEnabled = value; RaisePropertyChanged(); } }

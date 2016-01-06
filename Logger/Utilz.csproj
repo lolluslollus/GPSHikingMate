@@ -103,6 +103,7 @@
     <Compile Include="RegistryAccess.cs" />
     <Compile Include="SemaphoreSlimSafeRelease.cs" />
     <Compile Include="SwitchableObservableCollection.cs" />
+    <Compile Include="UniversalWrapPanel.cs" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>

@@ -13,7 +13,8 @@
 
     <Grid>
         <!-- point details -->
-        <Popup x:Name="SelectedPointPopup" IsLightDismissEnabled="True" Closed="OnInfoPanelClosed">
+        <Popup x:Name="SelectedPointPopup" IsLightDismissEnabled="True" Closed="OnInfoPanelClosed"
+			ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible">
             <local:PointInfoPanel DataContext="{Binding}" x:Name="MyPointInfoPanel"
                 PointChanged="OnInfoPanelPointChanged"
                 IsOverrideBackKeyPressed="True"
