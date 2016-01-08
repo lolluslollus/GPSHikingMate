@@ -1,4 +1,4 @@
-MainPackage=D:\CD\dev\VS2013\GPSHikingMate\GPSHikingAssistant\bin\ARM\Release\GPSHikingMate_2015.1211.2123.1_ARM.appx
-SymbolPackage=D:\CD\dev\VS2013\GPSHikingMate\GPSHikingAssistant\AppPackages\GPSHikingMate_2015.1211.2123.1_Test\GPSHikingMate_2015.1211.2123.1_ARM.appxsym
-ResourcePack=D:\CD\dev\VS2013\GPSHikingMate\GPSHikingAssistant\bin\ARM\Release\GPSHikingMate_2015.1211.2123.1_scale-100.appx
-ResourcePack=D:\CD\dev\VS2013\GPSHikingMate\GPSHikingAssistant\bin\ARM\Release\GPSHikingMate_2015.1211.2123.1_scale-140.appx
+MainPackage=D:\CD\dev\VS2013\GPSHikingMate\GPSHikingAssistant\bin\ARM\Release\GPSHikingMate_2016.108.1.1_ARM.appx
+SymbolPackage=D:\CD\dev\VS2013\GPSHikingMate\GPSHikingAssistant\AppPackages\GPSHikingMate_2016.108.1.1_Test\GPSHikingMate_2016.108.1.1_ARM.appxsym
+ResourcePack=D:\CD\dev\VS2013\GPSHikingMate\GPSHikingAssistant\bin\ARM\Release\GPSHikingMate_2016.108.1.1_scale-100.appx
+ResourcePack=D:\CD\dev\VS2013\GPSHikingMate\GPSHikingAssistant\bin\ARM\Release\GPSHikingMate_2016.108.1.1_scale-140.appx
